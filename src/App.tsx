@@ -1,13 +1,39 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './App.css'
+import { useContext } from 'react';
+
+import { Box, CircularProgress } from '@mui/material';
+
+import { PeopleContext } from './context';
+import { Form, CardList, NoContent } from './components';
+
+
 
 export const App = () => {
-
+  const { people, isLoading } = useContext( PeopleContext );
   return (
-    <>
-      <h1>Hey</h1>
-    </>
+    <Box
+      display='flex'
+      justifyContent='center'
+      alignItems='center'
+      flexDirection='column'
+      mt={2}
+    >
+      <Box width='75%' mb={10}>
+        <Form />
+      </Box>
+
+      {
+        isLoading 
+        ? <CircularProgress color='secondary' />
+        : (
+          <>
+          {
+            people.length <= 0 
+            ? <NoContent />
+            : <CardList people={ people }/>
+          }
+          </>
+        )
+      }
+    </Box>
   )
 }
