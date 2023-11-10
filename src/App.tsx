@@ -27,7 +27,7 @@ export const App = () => {
         : (
           <>
           {
-            people.length <= 0 
+            people && people.length <= 0 
             ? <NoContent />
             : <CardList people={ people }/>
           }

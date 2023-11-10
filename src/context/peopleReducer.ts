@@ -3,7 +3,7 @@
 import { Person } from '../interfaces';
 import { PeopleState } from './';
 
-type PeopleType = 
+export type PeopleType = 
 | { type: '[People] - ToogleLoading' }
 | { type: '[People] - Load From Storage', payload: Person[]  }
 | { type: '[People] - Add', payload: Person }

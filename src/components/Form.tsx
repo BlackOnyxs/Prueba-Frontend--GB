@@ -14,7 +14,7 @@ export const Form = () => {
 
     const { isLoading, addPerson, toggleLoading } = useContext( PeopleContext )
 
-    const { handleSubmit, formState: { errors }, getValues, setValue, control, reset } = useForm<Person>({
+    const { handleSubmit, formState: { errors }, getValues, control, reset } = useForm<Person>({
         defaultValues: {
             completeName: '',
             bornDate: dayjs().format('DD/MM/YYYY'),

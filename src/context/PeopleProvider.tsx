@@ -9,7 +9,7 @@ export interface PeopleState {
 }
 
 const People_INITIAL_STATE: PeopleState = {
-    isLoading: false,
+    isLoading: true,
     people: [],
     errorMessage: '',
 }
@@ -24,7 +24,6 @@ export const PeopleProvider:FC<PropsWithChildren> = ({ children }) => {
     
 
     const loadPeople = () => {
-        toggleLoading();
         const peopleFromStorage =  localStorage.getItem('people');
         const peopleList: Person[] = JSON.parse(peopleFromStorage!) || []
 
