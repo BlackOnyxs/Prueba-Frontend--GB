@@ -1,40 +1,39 @@
-import { Box } from '@mui/material';
-import { Form } from './components';
-import { CardList } from './components/PeopleList';
-import { Person } from './interfaces';
+import { useContext } from 'react';
 
-const peopleData:Person[] = [
-  {
-    completeName: 'Robin Avila',
-    bornDate: '02/10/2000',
-    comments: 'Some comments'
-  },
-  {
-    completeName: 'Robin Avila',
-    bornDate: '02/10/2000',
-    comments: 'Some comments'
-  },
-  {
-    completeName: 'Robin Avila',
-    bornDate: '02/10/2000',
-    comments: 'Some comments'
-  },
-]
+import { Box, CircularProgress } from '@mui/material';
+
+import { PeopleContext } from './context';
+import { Form, CardList, NoContent } from './components';
+
+
 
 export const App = () => {
-
+  const { people, isLoading } = useContext( PeopleContext );
   return (
     <Box
       display='flex'
       justifyContent='center'
       alignItems='center'
       flexDirection='column'
+      mt={2}
     >
       <Box width='75%' mb={10}>
         <Form />
       </Box>
 
-      <CardList people={ peopleData }/>
+      {
+        isLoading 
+        ? <CircularProgress color='secondary' />
+        : (
+          <>
+          {
+            people.length <= 0 
+            ? <NoContent />
+            : <CardList people={ people }/>
+          }
+          </>
+        )
+      }
     </Box>
   )
 }

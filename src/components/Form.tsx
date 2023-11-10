@@ -1,41 +1,36 @@
+import { useContext } from 'react';
+
 import { Box, Button, TextField } from '@mui/material';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import { DatePicker, LocalizationProvider } from '@mui/x-date-pickers';
+
 import dayjs from 'dayjs';
 import { useForm, Controller } from 'react-hook-form';
+
 import { Person } from '../interfaces';
-import { useEffect, useState } from 'react';
+import { PeopleContext } from '../context';
 
 export const Form = () => {
 
-    const [people, setPeople] = useState<Person[]>([]);
+    const { isLoading, addPerson, toggleLoading } = useContext( PeopleContext )
 
-    useEffect(() => {
-        const peopleFromStorage =  localStorage.getItem('people');
-        if ( !peopleFromStorage ) {
-            setPeople([]);
-        } else {
-            const peopleList: Person[] = JSON.parse(peopleFromStorage!) || [];
-            setPeople(peopleList);
-        }
-    }, []);
-
-    const { register, handleSubmit, formState: { errors }, getValues, setValue, control } = useForm<Person>({
+    const { handleSubmit, formState: { errors }, getValues, setValue, control, reset } = useForm<Person>({
         defaultValues: {
             completeName: '',
-            bornDate: dayjs().format('dd/mm/yyyy'),
+            bornDate: dayjs().format('DD/MM/YYYY'),
             comments: ''
         }
     });
 
-    const onSubmit = (formData: Person) => {
-        setPeople( (oldState) => [...oldState!, formData ] );
-
-        localStorage.setItem('people', JSON.stringify([...people, formData]))
+    const submit = ( formData: Person ) => {
+        toggleLoading();
+        addPerson(formData);
+        reset();
+        toggleLoading();
     }
-  
+
     return (
-        <form onSubmit={handleSubmit(onSubmit)} >
+        <form onSubmit={handleSubmit(submit)} >
             <Controller
                 name='completeName'
                 rules={{
@@ -62,7 +57,7 @@ export const Form = () => {
             />
             <Controller
                 name='bornDate'
-                control={control}
+                control={ control }
                 rules={{
                     required: 'La Fecha de nacimiento es requerida',
                     minLength: { value: 10, message: 'La fecha debe ir en el formato dd/mm/yyyy' }
@@ -71,6 +66,7 @@ export const Form = () => {
                     <LocalizationProvider dateAdapter={AdapterDayjs}>
                         <DatePicker
                             {...field}
+                            value={ dayjs(getValues('bornDate'))}
                             disableFuture
                             minDate={ dayjs('01/01/1990') }
                             label='Fecha de Nacimiento'
@@ -109,6 +105,7 @@ export const Form = () => {
             >
                 <Button
                     type='submit'
+                    disabled={ isLoading }
                 >
                     Guardar
                 </Button>

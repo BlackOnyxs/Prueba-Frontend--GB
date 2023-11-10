@@ -1,7 +1,9 @@
 # Prueba de conocimiento - Frontend
 
-1. Run
-   ```
-      yarn
-   ```
+## Correr la app
+Reconstruir los modulos de node y levantar
+```
+yarn install
+yarn dev
+```
 
