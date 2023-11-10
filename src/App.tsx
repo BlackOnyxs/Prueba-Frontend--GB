@@ -1,13 +1,40 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './App.css'
+import { Box } from '@mui/material';
+import { Form } from './components';
+import { CardList } from './components/PeopleList';
+import { Person } from './interfaces';
+
+const peopleData:Person[] = [
+  {
+    completeName: 'Robin Avila',
+    bornDate: '02/10/2000',
+    comments: 'Some comments'
+  },
+  {
+    completeName: 'Robin Avila',
+    bornDate: '02/10/2000',
+    comments: 'Some comments'
+  },
+  {
+    completeName: 'Robin Avila',
+    bornDate: '02/10/2000',
+    comments: 'Some comments'
+  },
+]
 
 export const App = () => {
 
   return (
-    <>
-      <h1>Hey</h1>
-    </>
+    <Box
+      display='flex'
+      justifyContent='center'
+      alignItems='center'
+      flexDirection='column'
+    >
+      <Box width='75%' mb={10}>
+        <Form />
+      </Box>
+
+      <CardList people={ peopleData }/>
+    </Box>
   )
 }
