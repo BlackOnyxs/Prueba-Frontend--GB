@@ -7,3 +7,7 @@ yarn install
 yarn dev
 ```
 
+## Correr los test
+```
+yarn test
+```
