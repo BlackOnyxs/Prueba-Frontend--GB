@@ -3,14 +3,14 @@ import {  PeopleType, peopleReducer } from '../../context';
 describe('Test on peopleReducer', () => { 
 
     const initialState = {
-        isLoading: true,
+        isLoading: false,
         people: [],
         errorMessage: '',
     }
 
     test('should toggle loading state', () => {
         const newState = peopleReducer( initialState, { type: '[People] - ToogleLoading'});
-        expect( newState.isLoading ).toBeFalsy();
+        expect( newState.isLoading ).toBeTruthy();
     });
 
     test('should loadPeopleFromStrorage', () => { 

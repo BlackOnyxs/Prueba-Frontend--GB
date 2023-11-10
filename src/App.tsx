@@ -9,6 +9,7 @@ import { Form, CardList, NoContent } from './components';
 
 export const App = () => {
   const { people, isLoading } = useContext( PeopleContext );
+  
   return (
     <Box
       display='flex'

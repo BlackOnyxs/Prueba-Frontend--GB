@@ -9,7 +9,7 @@ export interface PeopleState {
 }
 
 const People_INITIAL_STATE: PeopleState = {
-    isLoading: true,
+    isLoading: false,
     people: [],
     errorMessage: '',
 }
@@ -24,13 +24,19 @@ export const PeopleProvider:FC<PropsWithChildren> = ({ children }) => {
     
 
     const loadPeople = () => {
-        const peopleFromStorage =  localStorage.getItem('people');
-        const peopleList: Person[] = JSON.parse(peopleFromStorage!) || []
-
-        dispatch({
-            type: '[People] - Load From Storage',
-            payload: peopleList
-        });
+        toggleLoading();
+        try {
+            const peopleFromStorage =  localStorage.getItem('people');
+            const peopleList: Person[] = JSON.parse(peopleFromStorage!) || []
+    
+            dispatch({
+                type: '[People] - Load From Storage',
+                payload: peopleList
+            });
+        } catch (error: any) {
+            setErrorMessage(error)
+        }
+       
         toggleLoading();
     }
 
